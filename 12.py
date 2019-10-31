@@ -1,23 +1,15 @@
-from tkinter import*
-
-
+from tkinter import *
+from tkinter import filedialog
+def wczytaj_plik():
+   result =  filedialog.askopenfile(initialdir="/", title="wybierz plik", filetypes=(("text files", ".txt"), ("all files", "*.*")))
+   print(result)
+   for c in result:
+       print(c)
 def koniec() :
     sys.exit()
-
-okno = Tk ()
-etykieta= Label(okno, text= "Witaj  w panelu sterowania",fg="darkgreen")
-etykieta.pack()
-gornaramka=Frame(okno)
-gornaramka.pack()
-
-dolramka=Frame(okno)
-dolramka.pack(side=BOTTOM)
-
-przycisk1= Button(gornaramka,text="wprowadz dane ",fg="green")
-przycisk2=Button(gornaramka,text="koniec",fg="blue", command= koniec)
-
-
-przycisk1.pack(side=LEFT)
-przycisk2.pack(side=RIGHT)
-
-okno.mainloop()
+root = Tk()
+przycisk = Button(root, text="wczytaj plik", command=wczytaj_plik)
+przycisk1= Button(root, text="koniec", command=koniec)
+przycisk.pack()
+przycisk1.pack()
+root.mainloop()
