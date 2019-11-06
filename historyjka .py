@@ -5,11 +5,11 @@ def open_file():
    print(result)
    for c in result:
        print(c)
-def exit() :
+def exit():
     sys.exit()
 root = Tk()
-button = Button(root, text="wczytaj plik", command=open_file)
-button1= Button(root, text="koniec", command=exit)
-button.pack()
-button1.pack()
+Button = Button(root, text="wczytaj plik", command=open_file)
+Button1= Button(root, text="koniec", command=exit)
+Button.pack()
+Button1.pack()
 root.mainloop()
