@@ -1,15 +1,15 @@
 from tkinter import *
 from tkinter import filedialog
-def wczytaj_plik():
+def open_file():
    result =  filedialog.askopenfile(initialdir="/", title="wybierz plik", filetypes=(("text files", ".txt"), ("all files", "*.*")))
    print(result)
    for c in result:
        print(c)
-def koniec() :
+def exit() :
     sys.exit()
 root = Tk()
-przycisk = Button(root, text="wczytaj plik", command=wczytaj_plik)
-przycisk1= Button(root, text="koniec", command=koniec)
-przycisk.pack()
-przycisk1.pack()
+button = Button(root, text="wczytaj plik", command=open_file)
+button1= Button(root, text="koniec", command=exit)
+button.pack()
+button1.pack()
 root.mainloop()
