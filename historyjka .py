@@ -4,8 +4,12 @@ calls = []
 calls_counter = 0
 def open_file():
 
-   result =  filedialog.askopenfile(initialdir="/", title="wybierz plik", filetypes=(("text files", ".txt"), ("all files", "*.*")))
+   result = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
    print(result)
+   file_path = result.name
+   file_postion1 = file_path.index(".py")
+   file_postion2 = file_path.rindex("/")
+   file_name = file_path[file_postion2+1 : file_postion1+3]
    safe_tab = [] #tablica która przechowuje poszczególne wyrazy z każdej linijki using
    for c in result:
         safe_tab = c.split()
