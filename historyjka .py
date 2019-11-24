@@ -19,14 +19,30 @@ def open_file():
                 elif '"' in (i) and is_quotation == 1:
                     is_quotation = 0
                 if is_quotation == 0:
-                    if i == "import" or i == "using" or i == "include" or i == "open":
+                    if i == "import" or i == "import*":
                         global calls_counter
-                        calls.append(c) #dodanie linijki w której jest dodawany plik to tablicy
+                        if "from" in c:
+                            position1 = c.find(i)
+                            position2 = c.find("from")
+                            calls.append(
+                                [file_name, c[position2 + len("from "):position1]])  # dodanie nazwy pliku to tablicy
+                            calls_counter = calls_counter + 1
+                        else:
+                            position1 = c.find(i)
+                            position2 = len(c)
+                            calls.append(
+                                [file_name, c[position1 + len(i):position2 - 1]])  # dodanie nazwy pliku to tablicy
+                            calls_counter = calls_counter + 1
+                    if i == "using" or i == "include" or i == "open" or "open(" in i:
+                        # global calls_counter
+                        position1 = c.find(i)
+                        position2 = len(c)
+                        calls.append([file_name, c[position1 + len(i):position2 - 1]])  # dodanie nazwy pliku to tablicy
                         calls_counter = calls_counter + 1
                     if "#" in (i):
                         break
-        for i in range (0, calls_counter):
-           print("wywolanie numer ", i + 1, "zawiera: ", calls[i])
+        for i in range(0, calls_counter):
+            print("wywolanie numer ", i + 1, "zawiera: ", calls[i])
 def graph():
     print ("A tu bedzie stal nasz graf")
 def exit() :
