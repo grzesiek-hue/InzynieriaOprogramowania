@@ -27,12 +27,15 @@ def open_file():
                         break
         for i in range (0, calls_counter):
            print("wywolanie numer ", i + 1, "zawiera: ", calls[i])
-
+def graph():
+    print ("A tu bedzie stal nasz graf")
 def exit() :
     sys.exit()
 root = Tk()
-button = Button(root, text="wczytaj plik", command=open_file)
-button1= Button(root, text="koniec", command=exit)
-button.pack()
-button1.pack()
+button_open = Button(root, text="wczytaj plik", command=open_file)
+button_graph=Button(root, text="graf", command=graph)
+button_exit= Button(root, text="koniec", command=exit)
+button_open.pack()
+button_exit.pack()
+button_graph.pack()
 root.mainloop()
