@@ -4,6 +4,7 @@ calls = []
 calls_counter = 0
 def open_file():
     path = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
+    print(path)
     for lines in path:
         file_path = lines
         result = open(file_path)
@@ -24,20 +25,36 @@ def open_file():
                         if "from" in c:
                             position1 = c.find(i)
                             position2 = c.find("from")
-                            calls.append([file_name, c[position2 + len("from "):position1 - 1]])  # dodanie nazwy pliku to tablicy
-                            calls_counter = calls_counter + 1
+                            for file in path:
+                                filePostion1 = file.index(".py")
+                                filePostion2 = file.rindex("/")
+                                fileName = file[filePostion2 + 1: filePostion1 + 3]
+                                if fileName == c[position2 + len("from "):position1 - 1] + ".py":
+                                    calls.append([file_name, c[position2 + len("from "):position1 - 1]])  # dodanie nazwy pliku to tablicy
+                                    calls_counter = calls_counter + 1
                         else:
                             position1 = c.find(i)
                             position2 = len(c)
-                            calls.append(
-                                [file_name, c[position1 + len(i) + 1:position2 - 1]])  # dodanie nazwy pliku to tablicy
-                            calls_counter = calls_counter + 1
+                            for file in path:
+                                filePostion1 = file.index(".py")
+                                filePostion2 = file.rindex("/")
+                                fileName = file[filePostion2 + 1: filePostion1 + 3]
+                                if fileName == c[position1 + len(i) + 1:position2 - 1] + ".py":
+                                    calls.append(
+                                        [file_name,
+                                         c[position1 + len(i) + 1:position2 - 1]])  # dodanie nazwy pliku to tablicy
+                                    calls_counter = calls_counter + 1
                     if i == "using" or i == "include" or i == "open" or "open(" in i:
                         # global calls_counter
                         position1 = c.find(i)
                         position2 = len(c)
-                        calls.append([file_name, c[position1 + len(i) + 1:position2 - 1]])  # dodanie nazwy pliku to tablicy
-                        calls_counter = calls_counter + 1
+                        for file in path:
+                            filePostion1 = file.index(".py")
+                            filePostion2 = file.rindex("/")
+                            fileName = file[filePostion2 + 1: filePostion1 + 3]
+                            if fileName == c[position1 + len(i) + 1:position2 - 1] + ".py":
+                                calls.append([file_name, c[position1 + len(i) + 1:position2 - 1]])  # dodanie nazwy pliku to tablicy
+                                calls_counter = calls_counter + 1
                     if "#" in (i):
                         break
         #for i in range(0, calls_counter):
