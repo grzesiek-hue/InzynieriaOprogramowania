@@ -1,7 +1,9 @@
 from tkinter import *
 from tkinter import filedialog
+from funkcje import findFunctions
 calls = []
 calls_counter = 0
+functionsInFiles = {}
 def open_file():
     path = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
     print(path)
@@ -68,11 +70,17 @@ def dep():              #wypisanie danych pod graf
     print(convert(calls))
 def Graph():
     data_to_graph=convert(calls)
+def func():
+    files = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
+    for file in files:
+        functionsInFiles[file] = findFunctions(file)
 root = Tk()
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
 button2= Button(root,text="pokaz zaleznosci",command=dep)
+button3= Button(root,text="szukaj funkcji",command=func)
 button.pack()
 button1.pack()
 button2.pack()
+button3.pack()
 root.mainloop()
