@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 from funkcje import findFunctions
+from graph_h2 import wage_graph
 calls = []
 calls_counter = 0
 functionsInFiles = {}
@@ -79,8 +80,10 @@ button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
 button2= Button(root,text="pokaz zaleznosci",command=dep)
 button3= Button(root,text="szukaj funkcji",command=func)
+button4= Button(root,text="szukaj funkcji",command=wage_graph)
 button.pack()
 button1.pack()
 button2.pack()
 button3.pack()
+button4.pack()
 root.mainloop()
