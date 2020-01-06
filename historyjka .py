@@ -75,15 +75,24 @@ def func():
     files = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
     for file in files:
         functionsInFiles[file] = findFunctions(file)
+def data_to_graph():
+    function_list=list(functionsInFiles.values())
+    function_list=np.concatenate(function_list)
+    print("W plikach wystepuja takie funkcje: : \n {}".format(function_list))
+    print("Funkcja ({}) wystepuje ({}) razy w funkcji ({})".format('tu bedzie nazwa funkcji','tu bedzie ile razu wystepuje funkcja','tu bedzie w jakiej funkcji wystepuje funkcja'))
+
 root = Tk()
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
 button2= Button(root,text="pokaz zaleznosci",command=dep)
 button3= Button(root,text="szukaj funkcji",command=func)
-button4= Button(root,text="Graf his_2",command=wage_graph)
+button4=Button(root,text="Dane do grafu",command=data_to_graph)
+button5= Button(root,text="Graf his_2",command=wage_graph)
+
 button.pack()
 button1.pack()
 button2.pack()
 button3.pack()
 button4.pack()
+button5.pack()
 root.mainloop()
