@@ -79,14 +79,11 @@ def func():
 def data_container():
     function_list=list(functionsInFiles.values())
     function_list=np.concatenate(function_list)
-
     #container=[]      #bedzie w formacie [funkcja, ile razy wystepuje]
     #for x in wystapienia
         #container.append(function_list[x],zmienna_odpowiadajaca_liczbie_wystapien[x])
-
     print("W plikach wystepuja takie funkcje: : \n {}".format(function_list))
     print("Funkcja ({}) wystepuje ({}) ".format('tu bedzie nazwa funkcji','tu bedzie ile razu wystepuje funkcja'))
-
 root = Tk()
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
