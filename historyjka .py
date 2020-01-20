@@ -84,14 +84,25 @@ def data_container():
         #container.append(function_list[x],zmienna_odpowiadajaca_liczbie_wystapien[x])
     print("W plikach wystepuja takie funkcje: : \n {}".format(function_list))
     print("Funkcja ({}) wystepuje ({}) ".format('tu bedzie nazwa funkcji','tu bedzie ile razu wystepuje funkcja'))
-listafunkcji=[]
-listawag=[]
-for x in slownik.keys():
-    listafunkcji.append(x)
-for x in slownik.values():
-    listawag.append(x)
+def data_container_his_2():
+    #listatupli do testu
+    listatupli = [('funkcja1','wartosc1'),('funkcja2','wartosc1'),('funkcja1','wartosc1'),('funkcja1','wartosc3'),('funkcja1','wartosc2')]
+    slownik= {}
+    for wyrazy in listatupli:
+        slownik[wyrazy] = slownik.get(wyrazy, 0) + 1
 
-listafunkcjiwtuple=tuple(listafunkcji)
+    nazwy_funkcji_w_funkcjach=slownik.keys()
+    wagi=slownik.values()
+    print(nazwy_funkcji_w_funkcjach, "zawiera", wagi)
+
+    listafunkcji=[]
+    listawag=[]
+    for x in slownik.keys():
+        listafunkcji.append(x)
+    for x in slownik.values():
+        listawag.append(x)
+
+    listafunkcjiwtuple=tuple(listafunkcji)
 root = Tk()
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
