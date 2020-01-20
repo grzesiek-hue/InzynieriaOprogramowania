@@ -84,6 +84,14 @@ def data_container():
         #container.append(function_list[x],zmienna_odpowiadajaca_liczbie_wystapien[x])
     print("W plikach wystepuja takie funkcje: : \n {}".format(function_list))
     print("Funkcja ({}) wystepuje ({}) ".format('tu bedzie nazwa funkcji','tu bedzie ile razu wystepuje funkcja'))
+listafunkcji=[]
+listawag=[]
+for x in slownik.keys():
+    listafunkcji.append(x)
+for x in slownik.values():
+    listawag.append(x)
+
+listafunkcjiwtuple=tuple(listafunkcji)
 root = Tk()
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
