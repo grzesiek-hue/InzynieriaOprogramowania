@@ -1,11 +1,12 @@
 from tkinter import *
 from tkinter import filedialog
-from funkcje import findFunctions
+from funkcje import *
 from graph_h2 import *
 import numpy as np
 calls = []
 calls_counter = 0
 functionsInFiles = {}
+modulesRelations = {}
 def open_file():
     path = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
     print(path)
@@ -73,9 +74,10 @@ def dep():              #wypisanie danych pod graf
 def Graph():
     data_to_graph=convert(calls)
 def func():
-    files = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
+    files = filedialog.askopenfilenames(initialdir=".", title="wybierz plik")
     for file in files:
         functionsInFiles[file] = findFunctions(file)
+    return files
 def data_container():
     function_list=list(functionsInFiles.values())
     function_list=np.concatenate(function_list)
@@ -103,6 +105,10 @@ def data_container_his_2():
         listawag.append(x)
 
     listafunkcjiwtuple=tuple(listafunkcji)
+
+def modules_relations():
+    files = func()
+    modulesRelations = findFunctionCalls(functionsInFiles, files)
 root = Tk()
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
@@ -110,10 +116,12 @@ button2= Button(root,text="pokaz zaleznosci",command=dep)
 button3= Button(root,text="szukaj funkcji",command=func)
 button4= Button(root,text="Dane do grafu",command=data_container)
 button5= Button(root,text="Graf his_2",command=wage_graph)
+button6= Button(root,text="Relacje między modułami",command=modules_relations)
 button.pack()
 button1.pack()
 button2.pack()
 button3.pack()
 button4.pack()
 button5.pack()
+button6.pack()
 root.mainloop()
