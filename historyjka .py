@@ -3,6 +3,8 @@ from tkinter import filedialog
 from funkcje import *
 from graph_h2 import *
 import numpy as np
+from graph_h1 import *
+
 calls = []
 calls_counter = 0
 functionsInFiles = {}
@@ -71,6 +73,7 @@ def convert(calls):         #zamiana listy w tuple
     return tuple(calls)
 def dep():              #wypisanie danych pod graf
     print(convert(calls))
+    rysuj_graf(convert(calls))
 def Graph():
     data_to_graph=convert(calls)
 def func():
