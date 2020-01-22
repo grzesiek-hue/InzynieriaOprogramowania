@@ -9,6 +9,8 @@ calls = []
 calls_counter = 0
 functionsInFiles = {}
 modulesRelations = {}
+dane_graf_his2 = []
+
 def open_file():
     path = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
     print(path)
@@ -112,6 +114,26 @@ def data_container_his_2():
 def modules_relations():
     files = func()
     modulesRelations = findFunctionCalls(functionsInFiles, files)
+
+def dane_graph_2():
+    dane = []
+    pliki = func()
+    function_list = list(functionsInFiles.values())
+    function_list = np.concatenate(function_list)
+    for plik in pliki:
+        tresc_pliku = open(plik)
+        aktualna_funkcja = ""
+        for linia in tresc_pliku:
+            if linia.find("def") == 0:
+                aktualna_funkcja = linia.replace("def ", "")
+                aktualna_funkcja = aktualna_funkcja[:aktualna_funkcja.find("(")]
+                continue
+            for funkcja in function_list:
+                pozycja = linia.find(funkcja + "(")
+                if pozycja != -1 and (linia[pozycja-1] == "(" or linia[pozycja-1] == " "):
+                    dane.append((aktualna_funkcja, funkcja))
+    dane_graf_his2 = dane
+
 root = Tk()
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
@@ -120,6 +142,7 @@ button3= Button(root,text="szukaj funkcji",command=func)
 button4= Button(root,text="Dane do grafu",command=data_container)
 button5= Button(root,text="Graf his_2",command=wage_graph)
 button6= Button(root,text="Relacje między modułami",command=modules_relations)
+button7= Button(root,text="Dane do grafu his2",command=dane_graph_2)
 button.pack()
 button1.pack()
 button2.pack()
@@ -127,4 +150,5 @@ button3.pack()
 button4.pack()
 button5.pack()
 button6.pack()
+button7.pack()
 root.mainloop()
