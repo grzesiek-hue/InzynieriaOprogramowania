@@ -153,6 +153,8 @@ def dane_graph_2():
 def exit() :
     sys.exit()
 root = Tk()
+root.geometry("300x200")
+root.title("Panel użytkownika")
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root,text="Rysuj graf 1",command=dep)
 button2= Button(root,text="Rysuj graf 2",command=dane_graph_2)
