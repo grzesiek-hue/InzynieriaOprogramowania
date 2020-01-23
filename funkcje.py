@@ -24,10 +24,10 @@ def findFunctionCalls(functionsInFiles, files):
                     isCalled = re.findall(functionCallRegex, function.group(), re.MULTILINE)
                     if len(isCalled) == 0:
                         continue
-                    if (functionToCheck + ':' + moduleFrom in calls):
-                        calls[functionToCheck + ':' + moduleFrom] = calls[functionToCheck + ':' + moduleFrom] + 1
+                    if (function.group(1) + ':' + moduleFrom in calls):
+                        calls[function.group(1) + ':' + moduleFrom] = calls[function.group(1) + ':' + moduleFrom] + 1
                     else:
-                        calls[functionToCheck + ':' + moduleFrom] = 1
+                        calls[function.group(1) + ':' + moduleFrom] = 1
                     if (moduleFrom + ':' + moduleTo in calls):
                         calls[moduleFrom + ':' + moduleTo] = calls[moduleFrom + ':' + moduleTo] + 1
                     else:

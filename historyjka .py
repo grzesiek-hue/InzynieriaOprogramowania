@@ -87,13 +87,7 @@ def func():
     return files
 def data_container():
     func()
-    function_list=list(functionsInFiles.values())
-    function_list=np.concatenate(function_list)
-    #container=[]      #bedzie w formacie [funkcja, ile razy wystepuje]
-    #for x in wystapienia
-        #container.append(function_list[x],zmienna_odpowiadajaca_liczbie_wystapien[x])
-    print("W plikach wystepuja takie funkcje: : \n {}".format(function_list))
-    print("Funkcja ({}) wystepuje ({}) ".format('tu bedzie nazwa funkcji','tu bedzie ile razu wystepuje funkcja'))
+    #przeniesiona i zmieniona część do "def poprawnosc"
     modules_relations()
 def wage_graph_h():
     #listatupli do testu
@@ -108,9 +102,9 @@ def wage_graph_h():
         listafunkcji.append(x)
     for x in slownik.values():
         listawag.append(x)
-
+    poprawność(listafunkcji,listawag)
     listafunkcjiwtuple=tuple(listafunkcji)
-    wage_graph(listafunkcji, listawag)
+    wage_graph(listafunkcjiwtuple, listawag)
 def modules_relations():
     global modulesRelations
     files = func()
@@ -126,7 +120,7 @@ def modules_relations():
         listafunkcji.append(x.split(':'))
     for x in slownik.values():
         listawag.append(x)
-
+    poprawność(listafunkcji,listawag)
     listafunkcjiwtuple=tuple(listafunkcji)
     historyjka_3(listafunkcjiwtuple, listawag)
     
@@ -151,6 +145,14 @@ def dane_graph_2():
                     dane.append((aktualna_funkcja, funkcja))
     dane_graf_his2 = dane
     wage_graph_h()
+def poprawność(listafunkcji1,listawag1):
+    #wypisuje dane aby można było porównać czy zgadzaja sie wagi na grafie z wagami w listach
+    sprawdzenie_poprawnosci=[]
+    x=0
+    for y in listawag1:
+        sprawdzenie_poprawnosci.append([listafunkcji1[x],listawag1[x]])
+        print(sprawdzenie_poprawnosci[x][0]," wystepuje ",sprawdzenie_poprawnosci[x][1] ," raz/y ")
+        x+=1
 def exit() :
     sys.exit()
 root = Tk()
