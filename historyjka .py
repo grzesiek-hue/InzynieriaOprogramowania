@@ -86,6 +86,7 @@ def func():
         functionsInFiles[file] = findFunctions(file)
     return files
 def data_container():
+    func()
     function_list=list(functionsInFiles.values())
     function_list=np.concatenate(function_list)
     #container=[]      #bedzie w formacie [funkcja, ile razy wystepuje]
@@ -122,12 +123,12 @@ def modules_relations():
     listafunkcji=[]
     listawag=[]
     for x in slownik.keys():
-        listafunkcji.append(x)
+        listafunkcji.append(x.split(':'))
     for x in slownik.values():
         listawag.append(x)
 
     listafunkcjiwtuple=tuple(listafunkcji)
-    graph3(listafunkcji, listawag) #Tu wołamy graph 3 jak już będzie
+    historyjka_3(listafunkcjiwtuple, listawag)
     
     #print(modulesRelations)
 def dane_graph_2():
