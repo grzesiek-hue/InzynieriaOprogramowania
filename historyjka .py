@@ -1,14 +1,21 @@
 from tkinter import *
 from tkinter import filedialog
-from funkcje import findFunctions
+from funkcje import *
 from graph_h2 import *
 import numpy as np
+from graph_h1 import *
+
 calls = []
 calls_counter = 0
 functionsInFiles = {}
+modulesRelations = {}
+dane_graf_his2 = []
+path = []
+
 def open_file():
-    path = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
-    print(path)
+    global path
+    path = filedialog.askopenfilenames(initialdir=".", title="wybierz plik")
+    #print(path)
     for lines in path:
         file_path = lines
         result = open(file_path)
@@ -64,19 +71,22 @@ def open_file():
         #for i in range(0, calls_counter):
         #    print("wywolanie numer ", i + 1, "zawiera: ", calls[i])      # dałem w komentarz bo troche zbugowane
         #    pass
-def exit() :
-    sys.exit()
+
 def convert(calls):         #zamiana listy w tuple
     return tuple(calls)
 def dep():              #wypisanie danych pod graf
-    print(convert(calls))
+    #print(convert(calls))
+    rysuj_graf(convert(calls))
 def Graph():
     data_to_graph=convert(calls)
 def func():
-    files = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
+    global path
+    files = path
     for file in files:
         functionsInFiles[file] = findFunctions(file)
+    return files
 def data_container():
+    func()
     function_list=list(functionsInFiles.values())
     function_list=np.concatenate(function_list)
     #container=[]      #bedzie w formacie [funkcja, ile razy wystepuje]
@@ -84,17 +94,82 @@ def data_container():
         #container.append(function_list[x],zmienna_odpowiadajaca_liczbie_wystapien[x])
     print("W plikach wystepuja takie funkcje: : \n {}".format(function_list))
     print("Funkcja ({}) wystepuje ({}) ".format('tu bedzie nazwa funkcji','tu bedzie ile razu wystepuje funkcja'))
+    modules_relations()
+def wage_graph_h():
+    #listatupli do testu
+    global dane_graf_his2
+    slownik= {}
+    for wyrazy in dane_graf_his2:
+        slownik[wyrazy] = slownik.get(wyrazy, 0) + 1
+
+    listafunkcji=[]
+    listawag=[]
+    for x in slownik.keys():
+        listafunkcji.append(x)
+    for x in slownik.values():
+        listawag.append(x)
+
+    listafunkcjiwtuple=tuple(listafunkcji)
+    wage_graph(listafunkcji, listawag)
+def modules_relations():
+    global modulesRelations
+    files = func()
+    modulesRelations = findFunctionCalls(functionsInFiles, files)
+
+    slownik= {}
+    for wyrazy in modulesRelations:
+        slownik[wyrazy] = slownik.get(wyrazy, 0) + 1
+
+    listafunkcji=[]
+    listawag=[]
+    for x in slownik.keys():
+        listafunkcji.append(x.split(':'))
+    for x in slownik.values():
+        listawag.append(x)
+
+    listafunkcjiwtuple=tuple(listafunkcji)
+    historyjka_3(listafunkcjiwtuple, listawag)
+    
+    #print(modulesRelations)
+def dane_graph_2():
+    global dane_graf_his2
+    dane = []
+    pliki = func()
+    function_list = list(functionsInFiles.values())
+    function_list = np.concatenate(function_list)
+    for plik in pliki:
+        tresc_pliku = open(plik)
+        aktualna_funkcja = ""
+        for linia in tresc_pliku:
+            if linia.find("def") == 0:
+                aktualna_funkcja = linia.replace("def ", "")
+                aktualna_funkcja = aktualna_funkcja[:aktualna_funkcja.find("(")]
+                continue
+            for funkcja in function_list:
+                pozycja = linia.find(funkcja + "(")
+                if pozycja != -1 and (linia[pozycja-1] == "(" or linia[pozycja-1] == " "):
+                    dane.append((aktualna_funkcja, funkcja))
+    dane_graf_his2 = dane
+    wage_graph_h()
+def exit() :
+    sys.exit()
 root = Tk()
-button = Button(root, text="wczytaj plik", command=open_file)
-button1= Button(root, text="koniec", command=exit)
-button2= Button(root,text="pokaz zaleznosci",command=dep)
-button3= Button(root,text="szukaj funkcji",command=func)
-button4= Button(root,text="Dane do grafu",command=data_container)
-button5= Button(root,text="Graf his_2",command=wage_graph)
-button.pack()
-button1.pack()
-button2.pack()
-button3.pack()
-button4.pack()
-button5.pack()
+root.geometry("300x190")
+root.title("Panel użytkownika")
+button = Button(root, text="Wczytaj plik", command=open_file, bg="cyan",fg="blue",font=("Arial",16))
+button1= Button(root,text="Rysuj graf 1",command=dep, bg="cyan",fg="magenta",font=("Calibri",13))
+button2= Button(root,text="Rysuj graf 2",command=dane_graph_2, bg="cyan",fg="magenta",font=("Calibri",13))
+button3= Button(root,text="Rysuj graf 3",command=data_container, bg="cyan",fg="magenta",font=("Calibri",13))
+button4= Button(root, text="Koniec", command=exit, bg="cyan",fg="red",font=("Arial",16))
+#button5= Button(root,text="szukaj funkcji",command=func)
+#button6= Button(root,text="Graf his_2",command=wage_graph_h)
+#button= Button(root,text="Relacje między modułami",command=modules_relations)
+button.pack(fill=X)
+button1.pack(fill=X)
+button2.pack(fill=X)
+button3.pack(fill=X)
+button4.pack(fill=X)
+#button5.pack()
+#button6.pack()
+#button7.pack()
 root.mainloop()
