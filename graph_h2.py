@@ -26,9 +26,7 @@ def wage_graph(after_calc, wage_to_graph):
     nx.draw(G,pos, with_labels=True, font_weight='bold', node_size=1500,edge_cmap=plt.cm.Reds)
     pylab.show()
 
-def graph3(x,y):
-    print("Tu będzie rysowany graph 3, na tych danych: ", x, y)
-def historyjka_3():
+def historyjka_3(after_calc, wage_to_graph):
     G=nx.DiGraph()
     u=0
     for y in after_calc:
