@@ -10,10 +10,12 @@ calls_counter = 0
 functionsInFiles = {}
 modulesRelations = {}
 dane_graf_his2 = []
+path = []
 
 def open_file():
-    path = filedialog.askopenfilenames(initialdir="/", title="wybierz plik")
-    print(path)
+    global path
+    path = filedialog.askopenfilenames(initialdir="F:\VS Python\PythonApplication1", title="wybierz plik")
+    #print(path)
     for lines in path:
         file_path = lines
         result = open(file_path)
@@ -69,17 +71,17 @@ def open_file():
         #for i in range(0, calls_counter):
         #    print("wywolanie numer ", i + 1, "zawiera: ", calls[i])      # dałem w komentarz bo troche zbugowane
         #    pass
-def exit() :
-    sys.exit()
+
 def convert(calls):         #zamiana listy w tuple
     return tuple(calls)
 def dep():              #wypisanie danych pod graf
-    print(convert(calls))
+    #print(convert(calls))
     rysuj_graf(convert(calls))
 def Graph():
     data_to_graph=convert(calls)
 def func():
-    files = filedialog.askopenfilenames(initialdir=".", title="wybierz plik")
+    global path
+    files = path
     for file in files:
         functionsInFiles[file] = findFunctions(file)
     return files
@@ -91,16 +93,12 @@ def data_container():
         #container.append(function_list[x],zmienna_odpowiadajaca_liczbie_wystapien[x])
     print("W plikach wystepuja takie funkcje: : \n {}".format(function_list))
     print("Funkcja ({}) wystepuje ({}) ".format('tu bedzie nazwa funkcji','tu bedzie ile razu wystepuje funkcja'))
-def data_container_his_2():
+def wage_graph_h():
     #listatupli do testu
-    listatupli = [('funkcja1','wartosc1'),('funkcja2','wartosc1'),('funkcja1','wartosc1'),('funkcja1','wartosc3'),('funkcja1','wartosc2')]
+    global dane_graf_his2
     slownik= {}
-    for wyrazy in listatupli:
+    for wyrazy in dane_graf_his2:
         slownik[wyrazy] = slownik.get(wyrazy, 0) + 1
-
-    nazwy_funkcji_w_funkcjach=slownik.keys()
-    wagi=slownik.values()
-    print(nazwy_funkcji_w_funkcjach, "zawiera", wagi)
 
     listafunkcji=[]
     listawag=[]
@@ -110,12 +108,29 @@ def data_container_his_2():
         listawag.append(x)
 
     listafunkcjiwtuple=tuple(listafunkcji)
-
+    wage_graph(listafunkcji, listawag)
 def modules_relations():
+    global modulesRelations
     files = func()
     modulesRelations = findFunctionCalls(functionsInFiles, files)
 
+    slownik= {}
+    for wyrazy in modulesRelations:
+        slownik[wyrazy] = slownik.get(wyrazy, 0) + 1
+
+    listafunkcji=[]
+    listawag=[]
+    for x in slownik.keys():
+        listafunkcji.append(x)
+    for x in slownik.values():
+        listawag.append(x)
+
+    listafunkcjiwtuple=tuple(listafunkcji)
+    graph3(listafunkcji, listawag) #Tu wołamy graph 3 jak już będzie
+    
+    #print(modulesRelations)
 def dane_graph_2():
+    global dane_graf_his2
     dane = []
     pliki = func()
     function_list = list(functionsInFiles.values())
@@ -133,20 +148,21 @@ def dane_graph_2():
                 if pozycja != -1 and (linia[pozycja-1] == "(" or linia[pozycja-1] == " "):
                     dane.append((aktualna_funkcja, funkcja))
     dane_graf_his2 = dane
-
+def exit() :
+    sys.exit()
 root = Tk()
 button = Button(root, text="wczytaj plik", command=open_file)
 button1= Button(root, text="koniec", command=exit)
 button2= Button(root,text="pokaz zaleznosci",command=dep)
-button3= Button(root,text="szukaj funkcji",command=func)
-button4= Button(root,text="Dane do grafu",command=data_container)
-button5= Button(root,text="Graf his_2",command=wage_graph)
+#button3= Button(root,text="szukaj funkcji",command=func)
+button4= Button(root,text="Rysuj graph 3",command=data_container)
+button5= Button(root,text="Graf his_2",command=wage_graph_h)
 button6= Button(root,text="Relacje między modułami",command=modules_relations)
 button7= Button(root,text="Dane do grafu his2",command=dane_graph_2)
 button.pack()
 button1.pack()
 button2.pack()
-button3.pack()
+#button3.pack()
 button4.pack()
 button5.pack()
 button6.pack()
